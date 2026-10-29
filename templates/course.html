@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ course['name'] }} - SCA LMS Lab{% endblock %}
+
+{% block content %}
+<h1>{{ course['name'] }} <span class="muted">course #{{ course['id'] }}</span></h1>
+
+<section class="card">
+  <h2>Description</h2>
+  <div class="description">
+    {# VULN 3: Stored XSS - Source: description textarea in the instructor form. Sink: |safe below. Missing control: HTML escaping/sanitization. #}
+    {{ course['description'] | safe }}
+  </div>
+</section>
+
+<section class="card">
+  <h2>Course materials</h2>
+  {% if files %}
+    <ul class="material-list">
+      {% for f in files %}
+        <li>
+          <a href="{{ url_for('material', course=course['name'], file=f) }}">{{ f }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No materials for this course.</p>
+  {% endif %}
+</section>
+
+{% if session.get('role') == 'instructor' %}
+<section class="card">
+  <h2>Edit description</h2>
+  <form method="post" action="{{ url_for('update_description', course_id=course['id']) }}">
+    <label for="description">Course description (stored as HTML)</label>
+    <textarea id="description" name="description" rows="6">{{ course['description'] }}</textarea>
+    <button type="submit">Save description</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Enrolled students</h2>
+  {% if enrolled %}
+    <table>
+      <thead>
+        <tr><th>Enrollment</th><th>Student</th><th>Email</th></tr>
+      </thead>
+      <tbody>
+        {% for e in enrolled %}
+          <tr>
+            <td><a href="{{ url_for('enrollment', enrollment_id=e['enrollment_id']) }}">#{{ e['enrollment_id'] }}</a></td>
+            <td>{{ e['username'] }}</td>
+            <td>{{ e['email'] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">Nobody is enrolled.</p>
+  {% endif %}
+</section>
+{% endif %}
+{% endblock %}

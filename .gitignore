@@ -1,0 +1,32 @@
+# Generated database (auto-created by app.py / seed.py)
+lms.db
+lms.db-journal
+lms.db-wal
+lms.db-shm
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local secrets and environment files
+.env
+.env.*
+
+# Test / exploit artifacts
+cookies*.txt
+*.cookie
+*.jar
+
+# Instructor answer key (keep locally, never publish to the student repo)
+INSTRUCTOR_NOTES.md
+solutions/

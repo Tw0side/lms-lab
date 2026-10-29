@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - SCA LMS Lab{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<section class="card">
+  <h2>Courses</h2>
+  {% if courses %}
+    <ul class="course-list">
+      {% for c in courses %}
+        <li>
+          <a href="{{ url_for('course', course_id=c['id']) }}">{{ c['name'] }}</a>
+          <span class="muted">course #{{ c['id'] }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No courses yet.</p>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>{% if session.get('role') == 'instructor' %}All enrollments{% else %}My enrollment{% endif %}</h2>
+  {% if enrollments %}
+    <table>
+      <thead>
+        <tr>
+          <th>Enrollment</th>
+          <th>Student</th>
+          <th>Email</th>
+          <th>Course</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in enrollments %}
+          <tr>
+            <td><a href="{{ url_for('enrollment', enrollment_id=e['enrollment_id']) }}">#{{ e['enrollment_id'] }}</a></td>
+            <td>{{ e['username'] }}</td>
+            <td>{{ e['email'] }}</td>
+            <td>{{ e['course'] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="muted">No enrollments.</p>
+  {% endif %}
+</section>
+{% endblock %}

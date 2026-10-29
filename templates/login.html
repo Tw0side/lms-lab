@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in - SCA LMS Lab{% endblock %}
+
+{% block content %}
+<section class="card narrow">
+  <h1>Log in</h1>
+  <p class="muted">Use one of the lab accounts from the README.</p>
+
+  <form method="post" action="{{ url_for('login') }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="off" required>
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="off" required>
+
+    <button type="submit">Sign in</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Enrollment #{{ enrollment['id'] }} - SCA LMS Lab{% endblock %}
+
+{% block content %}
+<h1>Enrollment #{{ enrollment['id'] }}</h1>
+
+<section class="card narrow">
+  <dl class="details">
+    <dt>Student</dt>
+    <dd>{{ student['username'] }}</dd>
+
+    <dt>Email</dt>
+    <dd>{{ student['email'] }}</dd>
+
+    <dt>Course</dt>
+    <dd>{{ course['name'] }} (course #{{ enrollment['course_id'] }})</dd>
+
+    <dt>Enrollment ID</dt>
+    <dd>{{ enrollment['id'] }}</dd>
+
+    <dt>User ID</dt>
+    <dd>{{ enrollment['user_id'] }}</dd>
+  </dl>
+  <p class="muted">This page shows the enrollment record for the id in the URL.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,4 @@
+Advanced Application Security - Week 1
+
+Topics: authorization bugs, insecure direct object references, and
+server-side trust boundaries. Quiz 1 will be announced in class.

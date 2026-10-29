@@ -1,0 +1,4 @@
+Welcome to Introduction to Application Security.
+
+This course covers the OWASP Top 10, source/sink analysis, and safe coding
+practices. Your instructor will release additional handouts here.
