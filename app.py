@@ -99,11 +99,6 @@ def login():
     if request.method == "POST":
         username = request.form.get("username", "")
         password = request.form.get("password", "")
-
-        # VULN 2: SQL Injection - Login Bypass
-        # Source: request.form["username"] and request.form["password"]
-        # Sink: cursor.execute() below (raw sqlite3 cursor)
-        # Missing control: parameterized query / bound parameters
         query = (
             "SELECT * FROM users WHERE username='"
             + username
@@ -111,8 +106,7 @@ def login():
             + password
             + "'"
         )
-        user = get_db().execute(query).fetchone()  # noqa: S608  # VULN: string concatenation in SQL; username/password flow directly into execute()
-
+        user = get_db().execute(query).fetchone()  
         if user is not None:
             session.clear()
             session["user_id"] = user["id"]
@@ -220,10 +214,7 @@ def update_description(course_id):
     return redirect(url_for("course", course_id=course_id))
 
 
-# VULN 1: Path Traversal - Unauthorized Course Material Read
-# Source: request.args.get("file") (and attacker-controlled "course")
-# Sink: open() on the path built by os.path.join() below
-# Missing control: realpath containment check (resolved path must start with materials/<course>/)
+##
 @app.route("/material")
 @login_required
 def material():
@@ -252,7 +243,7 @@ def enrollment(enrollment_id):
 
     record = db.execute(
         "SELECT * FROM enrollments WHERE id = ?", (enrollment_id,)
-    ).fetchone()  # VULN: no ownership check; any logged-in user can read any enrollment by id
+    ).fetchone()  
     if record is None:
         abort(404)
 
